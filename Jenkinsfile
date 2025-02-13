@@ -1,4 +1,3 @@
-// Jenkinsfile
 pipeline {
     agent any
 
@@ -17,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+                    bat "docker build -t %DOCKER_IMAGE%:%DOCKER_TAG% ."
                 }
             }
         }
@@ -25,7 +24,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    bat 'docker run -d -p 5000:5000 --name flask-app ${DOCKER_IMAGE}:${DOCKER_TAG}'
+                    bat "docker run -d -p 5000:5000 --name flask-app %DOCKER_IMAGE%:%DOCKER_TAG%"
                 }
             }
         }
