@@ -33,8 +33,8 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    sh 'docker stop flask-app || true'
-                    sh 'docker rm flask-app || true'
+                    bat 'docker stop flask-app || true'
+                    bat 'docker rm flask-app || true'
                 }
             }
         }
