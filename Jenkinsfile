@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    bat 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").run('-p 5000:5000 --name flask-app')
+                    bat 'docker run -d -p 5000:5000 --name flask-app ${DOCKER_IMAGE}:${DOCKER_TAG}'
                 }
             }
         }
@@ -33,8 +33,8 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    bat 'docker stop flask-app || true'
-                    bat 'docker rm flask-app || true'
+                    bat 'docker stop flask-app || echo "Container already stopped"'
+                    bat 'docker rm flask-app || echo "Container already removed"'
                 }
             }
         }
